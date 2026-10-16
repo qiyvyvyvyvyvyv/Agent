@@ -2,6 +2,7 @@
     Agent 引擎
 """
 from internal.provider.interface import LLMProvider
+from internal.provider.openai import OpenAIProvider
 from internal.schema.message import Message, ROLE_SYSTEM, ROLE_USER
 from internal.tools.registry import Registry
 
@@ -25,7 +26,7 @@ log = logging.getLogger(__name__)
 
 class AgentEngine:
     """Agent 引擎：持有 Provider(大脑) 与 Registry(手脚)，并锁定一个工作区目录。"""
-    def __init__(self, provider: LLMProvider, registry: Registry, work_dir: str, enable_thinking: bool):
+    def __init__(self, provider: OpenAIProvider, registry: Registry, work_dir: str, enable_thinking: bool):
         self.provider = provider                # 大脑
         self.registry = registry                # 工具注册表
         self.work_dir = work_dir                # 工作区目录
