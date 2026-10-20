@@ -78,8 +78,8 @@ class RegistryImpl(Registry):
                 output=err_msg,
                 is_error=True,
             )
-            # 统一的异常兜底：工具内部抛出的任何异常都转换为 is_error 的观察结果，
-            # 反馈给模型让它自行纠错，而不是让整个引擎崩溃。
+        # 统一的异常兜底：工具内部抛出的任何异常都转换为 is_error 的观察结果，
+        # 反馈给模型让它自行纠错，而不是让整个引擎崩溃。
         try:
             output = tool.execute(call.arguments)
         except Exception as e:

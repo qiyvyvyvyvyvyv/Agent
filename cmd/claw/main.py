@@ -26,11 +26,12 @@ def main():
     registry.register(EditFileTool(work_dir))
     eng = AgentEngine(llm_provider, registry, work_dir, False)
     prompt = """
-    我当前目录下有一个 server.py 文件。
-    请帮我把里面 "TODO: 增加鉴权逻辑" 下面的那个 if 语句，整个替换为：
-    if user is None:
-        print("Forbidden!")
-        return
+    请按顺序完成以下操作，每一步都使用对应的工具：
+    1. 用 write_file 创建 calc.py，内容是一个函数 add(a, b) 返回 a + b，并在文件末尾 print(add(2, 3))
+    2. 用 bash 执行 python calc.py
+    3. 用 edit_file 把 return a + b 改成 return a * b
+    4. 用 read_file 读取 calc.py 确认修改成功
+    5. 再用 bash 执行一次 python calc.py，告诉我两次输出分别是多少
     """
     try:
         eng.run(prompt)
